@@ -14,6 +14,7 @@ pdfmatch [options] source.{pdf,jpeg,tif,...} [target.pdf]
 
   Options:
     --config  Use the given config file
+    --delete  Remove source file if match was found and command executed
      --debug  Don't create the PDF or execute commands, but print the text
           -l  Use the given language(s), overrides the configured "lang"
 ```
