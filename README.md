@@ -51,6 +51,7 @@ The config properties are:
       [text-match][3]
     - `command`: The command to execute, after substituting any JavaScript
       expressions
+- `no-match`: A default command to execute if no matching rule was found
 
 The `command` can contain variables in the form `${...}` where `...` is a
 JavaScript expression with access to the matched properties. After successful
@@ -60,6 +61,7 @@ substitution, the command is written to the console and executed using
 These special properties can be accessed in commands:
 
 - `file`: The PDF file
+- `now`: The current date as a [moment][4] object
 
 ## Install
 
@@ -89,3 +91,4 @@ MIT
 [1]: https://github.com/tesseract-ocr/tesseract
 [2]: http://www.foolabs.com/xpdf/home.html
 [3]: https://github.com/mantoni/text-match.js
+[4]: http://momentjs.com
