@@ -2,6 +2,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const argv = require('minimist')(process.argv.slice(2), {
   boolean: ['debug'],
   string: ['l', 'config']
@@ -47,17 +48,26 @@ fs.readFile(config, 'utf8', (err, content) => {
 
   const json = JSON.parse(content);
   const file = argv._[0];
+  if (!file) {
+    throw new Error('No file specified');
+  }
 
-  if (argv.debug || file.endsWith('.pdf')) {
+  if (file.endsWith('.pdf')) {
     processText(file, json);
     return;
   }
 
-  tesseract(argv, json, (err) => {
+  let target_file = argv._[1];
+  if (!target_file) {
+    target_file = file.substring(0, file.length - path.extname(file).length);
+    target_file = `${target_file}.pdf`;
+  }
+  const lang = argv.l || config.lang || 'eng';
+  tesseract(lang, file, target_file, (err) => {
     if (err) {
       throw err;
     }
-    processText(file, json);
+    processText(target_file, json);
   });
 
 });

@@ -10,8 +10,7 @@ rename and move the PDF.
 The `pdfmatch` command is used like this:
 
 ```
-pdfmatch [options] source.pdf
-pdfmatch [options] source.jpeg target.pdf
+pdfmatch [options] source.{pdf,jpeg,tif,...} [target.pdf]
 
   Options:
     --config  Use the given config file
@@ -22,9 +21,18 @@ pdfmatch [options] source.jpeg target.pdf
 If no config file is specified, `pdfmatch` will look for a file named
 `pdfmatch.json` in the current directory.
 
-The config file can specify the language(s) to use and a set of rules to apply.
-After the first match, the associated command is executed and processing is
-stopped.
+If the source file is a PDF, the text is extracted with `pdftotext` and the
+configured rules are applied.
+
+If the source file is not a PDF, it is expected to be an image and is converted
+to a PDF with searchable text using `tesseract`. If no target file is given,
+the base name of the image is used for the PDF. In a second step, the text is
+extracted with `pdftotext` and the configured rules are applied.
+
+The config file can specify the language(s) to use with `tesseract` and a set
+of rules to apply. After the first match, the associated command is executed
+and processing is stopped. If no match was found the `no-match` command is
+executed.
 
 Here is an example:
 
@@ -38,7 +46,8 @@ Here is an example:
       "invoiceDate": "Ausstellungsdatum: ${DATE}"
     }],
     "command": "mv ${file} ${invoiceDate.format('YYYY-MM-DD')}\\ invoice.pdf"
-  }]
+  }],
+  "no-match": "mv ${file} ${now.format('YYYY-MM-DD_HHmmss')}.pdf"
 }
 ```
 
