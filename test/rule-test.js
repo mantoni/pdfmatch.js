@@ -8,7 +8,7 @@ const sinon = require('sinon');
 const rule = require('../lib/rule');
 
 describe('rule', () => {
-  const context = { source_file: 'source.txt', target_file: 'target.pdf' };
+  const context = { file: 'file.pdf' };
   let sandbox;
 
   beforeEach(() => {
@@ -63,37 +63,37 @@ describe('rule', () => {
   it('allows to access ${source_file} from context', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
-      command: 'echo "Matched ${source_file}"'
+      command: 'echo "Matched ${file}"'
     }, 'Some thingy', context);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
     sinon.assert.calledWith(child_process.execSync,
-      'echo "Matched source.txt"');
+      'echo "Matched file.pdf"');
   });
 
   it('allows to access ${target_file} from context', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
-      command: 'echo "Matched ${target_file}"'
+      command: 'echo "Matched ${file}"'
     }, 'Some thingy', context);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
     sinon.assert.calledWith(child_process.execSync,
-      'echo "Matched target.pdf"');
+      'echo "Matched file.pdf"');
   });
 
   it('replaces multiple values in command', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
-      command: 'echo "Matched ${target_file} with ${some}"'
+      command: 'echo "Matched ${file} with ${some}"'
     }, 'Some thingy', context);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
     sinon.assert.calledWith(child_process.execSync,
-      'echo "Matched target.pdf with thingy"');
+      'echo "Matched file.pdf with thingy"');
   });
 
 });
