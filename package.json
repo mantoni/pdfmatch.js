@@ -45,6 +45,7 @@
   "files": [
     "pdfmatch.js",
     "lib",
+    "scripts",
     "LICENSE",
     "README.md"
   ],
