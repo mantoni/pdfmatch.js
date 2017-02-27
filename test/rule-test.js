@@ -9,6 +9,7 @@ const rule = require('../lib/rule');
 
 describe('rule', () => {
   const context = { file: 'file.pdf' };
+  const flags = {};
   let sandbox;
 
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe('rule', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
       command: 'echo "Found ${some}"'
-    }, 'Some thingy', context);
+    }, 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
@@ -45,7 +46,7 @@ describe('rule', () => {
       rule({
         match: { some: 'Some ${WORD}' },
         command: 'echo "Found ${unknown}"'
-      }, 'Some thingy', context);
+      }, 'Some thingy', context, flags);
     }, /ReferenceError: unknown is not defined/);
   });
 
@@ -53,7 +54,7 @@ describe('rule', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
       command: 'echo "Found ${(some.toUpperCase())}"'
-    }, 'Some thingy', context);
+    }, 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
@@ -64,7 +65,7 @@ describe('rule', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
       command: 'echo "Matched ${file}"'
-    }, 'Some thingy', context);
+    }, 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
@@ -76,7 +77,7 @@ describe('rule', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
       command: 'echo "Matched ${file}"'
-    }, 'Some thingy', context);
+    }, 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
@@ -88,7 +89,7 @@ describe('rule', () => {
     const matched = rule({
       match: { some: 'Some ${WORD}' },
       command: 'echo "Matched ${file} with ${some}"'
-    }, 'Some thingy', context);
+    }, 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);

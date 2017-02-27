@@ -9,6 +9,7 @@ const rules = require('../lib/rules');
 
 describe('rules', () => {
   const context = { source_file: 'source.txt', target_file: 'target.pdf' };
+  const flags = {};
   let sandbox;
 
   beforeEach(() => {
@@ -35,7 +36,7 @@ describe('rules', () => {
     const matched = rules([{
       match: { some: 'Some ${WORD}' },
       command: 'echo "Found ${some}"'
-    }], 'Some thingy', context);
+    }], 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
@@ -46,7 +47,7 @@ describe('rules', () => {
     const matched = rules([{
       match: [{ some: 'Other ${WORD}' }, { some: 'Some ${WORD}' }],
       command: 'echo "Found ${some}"'
-    }], 'Some thingy', context);
+    }], 'Some thingy', context, flags);
 
     assert.equal(matched, true);
     sinon.assert.calledOnce(child_process.execSync);
