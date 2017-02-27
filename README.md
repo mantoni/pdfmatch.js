@@ -30,16 +30,15 @@ to a PDF with searchable text using `tesseract`. If no target file is given,
 the base name of the image is used for the PDF. In a second step, the text is
 extracted with `pdftotext` and the configured rules are applied.
 
-The config file can specify the language(s) to use with `tesseract` and a set
-of rules to apply. After the first match, the associated command is executed
-and processing is stopped. If no match was found the `no-match` command is
-executed.
+The configuration file can specify the language(s) to use with `tesseract` and
+a set of rules to apply. After the first match, the associated command is
+executed and processing is stopped. If no match was found the `no-match`
+command is executed.
 
 Here is an example:
 
 ```json
 {
-  "lang": "deu+eng",
   "rules": [{
     "matches": [{
       "invoiceDate": "Invoive Date: ${DATE}"
@@ -93,6 +92,33 @@ Installing this tool:
 ```bash
 $ npm install pdfmatch -g
 ```
+
+## Example setup
+
+My working setup is a `~/Documents/Scans` folder containing only my
+`pdfmatch.json` configuration. The commands in the rules move the matched files
+one level up:
+
+```json
+{
+  "lang": "deu+eng",
+  "rules": [{
+    "match": {
+      "company": "npm, Inc",
+      "invoiceDate": "${DATE}"
+    },
+    "command": "mv ${file} ../${invoiceDate.format('YYYY-MM-DD')}\\ npm.pdf"
+  }],
+  "no-match": "mv ${file} ../${now.format('YYYY-MM-DD_HHmmss')}.pdf"
+}
+```
+
+## AppleScript folder action
+
+If you're following the above example setup, there is an AppleScript folder
+action in `./scripts` which allows you to save or drop files in a special
+folder and have `pdfmatch` invoked automatically. Follow the instructions in
+the header comments on how to use it.
 
 ## API
 
