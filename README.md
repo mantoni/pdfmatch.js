@@ -52,7 +52,7 @@ Here is an example:
 }
 ```
 
-The config properties are:
+The configuration properties are:
 
 - `lang`: The language(s) to pass to Tesseract
 - `rules`: An array of rules to run, where each rule is an object with these
@@ -93,6 +93,15 @@ Installing this tool:
 ```bash
 $ npm install pdfmatch -g
 ```
+
+## API
+
+This module exposes an API if `require`d as a node module:
+
+- `processText(pdf_file, config, callback)`: Extract text from a PDF file and
+  applies rules from the given configuration (see above).
+- `processImage(image_file, pdf_file, config, callback)`: Converts an image to
+  a PDF file and then calls `processText` with the result.
 
 ## License
 

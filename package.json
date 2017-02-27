@@ -5,6 +5,7 @@
   "bin": {
     "pdfmatch": "pdfmatch.js"
   },
+  "main": "lib/pdfmatch.js",
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
