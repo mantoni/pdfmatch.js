@@ -1,5 +1,12 @@
 # Changes
 
+## 1.2.0
+
+✨ Add AppleScript folder action
+✨ Expose API
+🐛 Escape "file" path blanks before passing to command
+📚 Document example setup and AppleScript folder action
+
 ## 1.1.0
 
 ✨ Add `--delete` option
