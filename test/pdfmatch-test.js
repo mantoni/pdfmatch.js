@@ -54,6 +54,23 @@ describe('API', () => {
         `pdftotext ${pdftotext_flags} some\\ path\\ to.pdf -`);
     });
 
+    it('escapsed blanks in "file" context property for commands', () => {
+      pdfmatch.processText('some path to.pdf', {
+        rules: [{
+          match: {
+            what: 'text'
+          },
+          command: 'echo "Matched ${what} in ${file}"'
+        }]
+      }, () => {});
+
+      child_process.exec.yield(null, new Buffer('some text to match'));
+
+      sinon.assert.calledOnce(child_process.execSync);
+      sinon.assert.calledWith(child_process.execSync,
+        'echo "Matched text in some\\ path\\ to.pdf"');
+    });
+
   });
 
   describe('processImage', () => {
