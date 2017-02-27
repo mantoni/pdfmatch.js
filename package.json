@@ -1,6 +1,6 @@
 {
   "name": "pdfmatch",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Match text in images with Tesseract",
   "bin": {
     "pdfmatch": "pdfmatch.js"

@@ -1,5 +1,9 @@
 # Changes
 
+## 1.2.1
+
+- 🙈 Remove my personal `$PATH` setting from default apple script
+
 ## 1.2.0
 
 - ✨ Add AppleScript folder action
