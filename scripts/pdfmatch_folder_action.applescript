@@ -8,9 +8,10 @@
 #
 on adding folder items to this_folder after receiving these_files
 	try
+    set ext to {"pdf", "tif", "tiff", "jpeg", "jpg"}
 		repeat with each_file in these_files
 			tell application "System Events"
-				if name extension of each_file is "pdf" or "tif" or "tiff" or "jpeg" or "jpg" then
+				if ext contains name extension of each_file then
 					# You might need to add your node binary to your $PATH. For example:
 					# export PATH=/usr/local/bin:/usr/local/opt/node@6/bin:$PATH 
 					set output to (do shell script "cd '" & POSIX path of this_folder & "' && pdfmatch '" & POSIX path of each_file & "' --delete 2>&1")
